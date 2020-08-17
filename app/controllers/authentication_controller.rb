@@ -13,7 +13,7 @@ class AuthenticationController < ApplicationController
         payload = { user_id: @user.id }
         # secret = Rails.application.secrets.secret_key_base
         secret = 'tell this to the bouncer'
-        token = JWT.encode(payload, secret)
+        token = JWT.encode payload, secret
 
         render json: { token: token }, status: :ok
       end
