@@ -7,6 +7,10 @@ class UsersController < ApplicationController
     render json: @users
   end
 
+  def profile
+    render json: @user, include: [:coffees]
+  end
+
   def create
     @user = User.create(
       username: params[:username],

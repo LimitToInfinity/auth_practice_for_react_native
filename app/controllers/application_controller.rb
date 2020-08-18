@@ -8,7 +8,17 @@ class ApplicationController < ActionController::API
     if !auth_header
       render json: { message: 'No token' }, status: :forbidden
     else
-      render json: { message: 'cool token' }, status: :ok
+      token = auth_header.split(' ')[1]
+      secret = 'tell this to the bouncer'
+
+      begin
+        decoded_token = JWT.decode token, secret
+        payload = decoded_token.first
+        user_id = payload['user_id']
+        @user = User.find(user_id)
+      rescue
+        render json: { message: 'Invalid JWT' }, status: :forbidden
+      end
     end
   end
 
