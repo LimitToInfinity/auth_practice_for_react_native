@@ -9,7 +9,7 @@ class ApplicationController < ActionController::API
       render json: { message: 'No token' }, status: :forbidden
     else
       token = auth_header.split(' ')[1]
-      secret = 'tell this to the bouncer'
+      secret = ENV['SECRET_KEY_BASE']
 
       begin
         decoded_token = JWT.decode token, secret
